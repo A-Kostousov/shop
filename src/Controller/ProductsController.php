@@ -15,7 +15,7 @@ class ProductsController extends AbstractController
      */
     public function index()
     {
-        return $this->render('products/index.html.twig', [
+        return $this->render('products/index.html.twig.', [
             'controller_name' => 'ProductsController',
         ]);
     }
@@ -29,7 +29,7 @@ class ProductsController extends AbstractController
      */
     public function show(Product $product)
     {
-        return $this->render('products/show.html.twig', [
+        return $this->render('products/show.html.twig.', [
             'product' => $product
         ]);
     }
