@@ -13,7 +13,7 @@ class CategoryController extends AbstractController
     {
         return $this->render('categories/index.html.twig', [
             'controller_name' => 'CategoryController',
-            'categories' => $products->getAllCategory(),
+            'categories' => $products->getAllCategories(),
         ]);
     }
     /**
