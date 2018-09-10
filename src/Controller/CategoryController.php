@@ -1,5 +1,6 @@
 <?php
 namespace App\Controller;
+
 use App\Entity\Category;
 use App\Service\Products;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
