@@ -20,7 +20,7 @@ class FeedbackRequestRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return FeedbackRequest[] Returns an array of FeedbackRequest objects
+//     * @return FeedbackRequestAdmin[] Returns an array of FeedbackRequestAdmin objects
 //     */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class FeedbackRequestRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?FeedbackRequest
+    public function findOneBySomeField($value): ?FeedbackRequestAdmin
     {
         return $this->createQueryBuilder('f')
             ->andWhere('f.exampleField = :val')
