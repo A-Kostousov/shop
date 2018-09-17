@@ -1,11 +1,9 @@
 <?php
-
 namespace App\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
-
 /**
- * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
+ * @ORM\Entity()
+ * @ORM\Table(name="order_items")
  */
 class OrderItem
 {
@@ -15,77 +13,81 @@ class OrderItem
      * @ORM\Column(type="integer")
      */
     private $id;
-
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Order", inversedBy="items")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $name;
-
+    private $order;
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="orderItems")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $Quantity;
-
+    private $product;
+    /**
+     * @ORM\Column(type="integer", options={"default": 0})
+     */
+    private $quantity;
     /**
      * @ORM\Column(type="decimal", precision=12, scale=2, options={"default": 0})
      */
     private $price;
-
     /**
-     * @ORM\Column(type="decimal", precision=12, scale=2, options={"default": 0})
+     * @ORM\Column(type="decimal", precision=20, scale=2, options={"default": 0})
      */
-    private $Amount;
-
+    private $cost;
+    public function __construct()
+    {
+        $this->quantity = 0;
+        $this->price = 0;
+        $this->cost = 0;
+    }
     public function getId(): ?int
     {
         return $this->id;
     }
-
-    public function getName(): ?string
+    public function getOrder(): ?Order
     {
-        return $this->name;
+        return $this->order;
     }
-
-    public function setName(string $name): self
+    public function setOrder(?Order $order): self
     {
-        $this->name = $name;
-
+        $this->order = $order;
         return $this;
     }
-
-    public function getQuantity(): ?string
+    public function getProduct(): ?Product
     {
-        return $this->Quantity;
+        return $this->product;
     }
-
-    public function setQuantity(string $Quantity): self
+    public function setProduct(?Product $product): self
     {
-        $this->Quantity = $Quantity;
-
+        $this->product = $product;
         return $this;
     }
-
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+    public function setQuantity(int $quantity): self
+    {
+        $this->quantity = $quantity;
+        return $this;
+    }
     public function getPrice()
     {
         return $this->price;
     }
-
     public function setPrice($price): self
     {
         $this->price = $price;
-
         return $this;
     }
-
-    public function getAmount()
+    public function getCost()
     {
-        return $this->Amount;
+        return $this->cost;
     }
-
-    public function setAmount($Amount): self
+    public function setCost($cost): self
     {
-        $this->Amount = $Amount;
-
+        $this->cost = $cost;
         return $this;
     }
 }

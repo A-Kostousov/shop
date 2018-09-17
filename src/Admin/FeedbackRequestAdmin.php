@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Андрей
- * Date: 16.09.2018
- * Time: 20:20
- */
+
 
 namespace App\Admin;
 
@@ -41,8 +36,6 @@ class FeedbackRequestAdmin extends AbstractAdmin
             ->add('name')
             ->add('message')
             ->add('email')
-            ->add('feedback_request')
-
         ;
     }
 

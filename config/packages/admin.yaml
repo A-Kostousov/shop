@@ -14,5 +14,5 @@ services:
   App\Admin\FeedbackRequestAdmin:
      arguments: [~,App\Entity\FeedbackRequest, ~ ]
      tags:
-     - { name: sonata.admin, manager_type: orm, label: Обратная связь, group: Обратная связь }
+     - { name: sonata.admin, manager_type: orm, label: Обратная связь, group: Обращения }
      public: true
