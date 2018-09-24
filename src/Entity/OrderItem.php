@@ -19,7 +19,7 @@ class OrderItem
      */
     private $order;
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="orderItems")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Product", inversedBy="orderItems" )
      * @ORM\JoinColumn(nullable=false)
      */
     private $product;
@@ -72,6 +72,14 @@ class OrderItem
         $this->quantity = $quantity;
         return $this;
     }
+
+    public function addQuantity (int $quantity): self
+    {
+        $this->quantity +=$quantity;
+
+        return $this;
+    }
+
     public function getPrice()
     {
         return $this->price;
