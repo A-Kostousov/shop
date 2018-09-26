@@ -14,12 +14,9 @@ class FeedbackController extends AbstractController
     /**
      * @Route("/feedback", name="feedback")
      */
-    public function index(Request $request, EntityManagerInterface $entityManager)
-    {
+    public function index(Request $request, EntityManagerInterface $entityManager) {
         $feedbackRequest = new FeedbackRequest();
-
         $form = $this->createForm(FeedbackType::class, $feedbackRequest);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){

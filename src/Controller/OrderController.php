@@ -10,11 +10,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OrderController extends AbstractController
 {
+
     /**
      * @Route("/order", name="order")
      */
-    public function index()
-    {
+    public function index() {
         return $this->render('order/index.html.twig', [
             'controller_name' => 'OrderController',
         ]);
@@ -25,8 +25,7 @@ class OrderController extends AbstractController
      *
      * @throws
      */
-    public function addToCart(Product $product, Orders $orders, Request $request, $quantity = 1)
-    {
+    public function addToCart(Product $product, Orders $orders, Request $request, $quantity = 1) {
         $orders->addToCart($product, $quantity);
 
         return $this->redirect($request->headers->get('referer'));

@@ -10,19 +10,18 @@ class CategoryController extends AbstractController
     /**
      * @Route("/categories", name="categories")
      */
-    public function index(Products $products)
-    {
+    public function index(Products $products) {
+
         return $this->render('categories/index.html.twig', [
             'controller_name' => 'CategoryController',
             'categories' => $products->getAllCategories(),
         ]);
     }
+
     /**
      * @Route("/categories/{id}", name="category_show")
    */
-
-    public function show(Category $category)
-    {
+    public function show(Category $category) {
         return $this->render('categories/show.html.twig',['category' => $category]);
     }
 }

@@ -29,24 +29,21 @@ class Category
      */
     private $products;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->name = '';
         $this->products = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
+    public function getId(): ?int {
         return $this->id;
     }
 
-    public function getName(): ?string
-    {
+    public function getName(): ?string {
+
         return $this->name;
     }
 
-    public function setName(string $name): self
-    {
+    public function setName(string $name): self {
         $this->name = $name;
 
         return $this;
@@ -55,13 +52,12 @@ class Category
     /**
      * @return Collection|Product[]
      */
-    public function getProducts(): Collection
-    {
+    public function getProducts(): Collection {
+
         return $this->products;
     }
 
-    public function addProduct(Product $product): self
-    {
+    public function addProduct(Product $product): self {
         if (!$this->products->contains($product)) {
             $this->products[] = $product;
             $product->setCategory($this);
@@ -70,8 +66,7 @@ class Category
         return $this;
     }
 
-    public function removeProduct(Product $product): self
-    {
+    public function removeProduct(Product $product): self {
         if ($this->products->contains($product)) {
             $this->products->removeElement($product);
             // set the owning side to null (unless already changed)
@@ -83,10 +78,8 @@ class Category
         return $this;
     }
 
-    public function __toString()
-    {
+    public function __toString() {
+
         return $this->name;
     }
-
-
 }

@@ -13,8 +13,7 @@ class ProductsController extends AbstractController
     /**
      * @Route("/products", name="products")
      */
-    public function index()
-    {
+    public function index() {
         return $this->render('products/index.html.twig.', [
             'controller_name' => 'ProductsController',
         ]);
@@ -27,8 +26,7 @@ class ProductsController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function show(Product $product)
-    {
+    public function show(Product $product) {
         return $this->render('products/show.html.twig.', [
             'product' => $product
         ]);
