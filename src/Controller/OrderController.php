@@ -15,7 +15,8 @@ class OrderController extends AbstractController
     /**
      * @Route("/order", name="order")
      */
-    public function index() {
+    public function index()
+    {
         return $this->render('order/index.html.twig', [
             'controller_name' => 'OrderController',
         ]);
@@ -26,7 +27,8 @@ class OrderController extends AbstractController
      *
      * @throws
      */
-    public function addToCart(Product $product, Orders $orders, Request $request, $quantity = 1) {
+    public function addToCart(Product $product, Orders $orders, Request $request, $quantity = 1)
+    {
         $orders->addToCart($product, $quantity);
 
         if ($request->isXmlHttpRequest()) {
@@ -38,18 +40,21 @@ class OrderController extends AbstractController
     /**
      * @Route("/orders/cart-in-header", name="orders_cart_in_header")
      */
-    public function cartInHeader (Orders $orders) {
+    public function cartInHeader(Orders $orders)
+    {
         $cart = $orders->getCartFromSession();
-        return $this->render('orders/cart_in_header.html.twig', ['cart' =>$cart]);
+        return $this->render('orders/cart_in_header.html.twig', ['cart' => $cart]);
     } // - это метод
 
     /**
      * @Route("orders/cart", name="orders_cart")
      */
-    public function cart(Orders $orders) {
+    public function cart(Orders $orders)
+    {
         $cart = $orders->getCartFromSession();
         $items = $orders->getCartFromSession()->getItems();
         return $this->render('orders/cart.html.twig',
             ['cart' => $cart, 'items' => $items]);
     }
+
 }

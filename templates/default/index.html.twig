@@ -1,11 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+<div class="container">
     <h1>Добро пожаловать</h1>
-
     <div class="row">
-
-    {{ include('partials/products_list.html.twig', {'products': products}) }}
-
+        <p>
+            {{ include('partials/products_list.html.twig', {'products': products}) }}
+        </p>
     </div>
+</div>
 {% endblock %}
