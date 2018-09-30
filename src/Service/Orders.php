@@ -24,8 +24,7 @@ class Orders
      */
     private $session;
 
-    public function __construct(EntityManagerInterface $entityManager, SessionInterface $session)
-    {
+    public function __construct(EntityManagerInterface $entityManager, SessionInterface $session) {
         $this->em = $entityManager;
         $this->session = $session;
     }
@@ -37,8 +36,7 @@ class Orders
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    public function addToCart(Product $product, $quantity = 1)
-    {
+    public function addToCart(Product $product, $quantity = 1) {
         $order = $this->getCartFromSession();
         $items = $order->getItems();
 
@@ -60,30 +58,32 @@ class Orders
      * @throws \Doctrine\ORM\OptimisticLockException
      * @throws \Doctrine\ORM\TransactionRequiredException
      */
-    private function getCartFromSession()
-    {
+    public function getCartFromSession() {
         $orderId = $this->session->get(self::CART_SESSION_NAME);
 
-        if ($orderId)
-        {
+        if ($orderId)  {
             /** @var Order $order*/
             $order = $this->em->find(Order::class, $orderId);
         } else {
             $order = null;
         }
 
-        if (!$order)
-        {
+        if (!$order) {
             $order = new Order();
         }
 
         return $order;
     }
 
-    private function saveCart(Order $order)
-    {
+    /**
+     * @param Order $order
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    private function saveCart(Order $order) {
         $this->em->persist($order);
         $this->em->flush();
         $this->session->set(self::CART_SESSION_NAME, $order->getId());
     }
+
 }

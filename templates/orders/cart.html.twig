@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+ {% block title %}Магазин{% endblock %}
+ {% block body %}
+
+     <div class="col-sm-3">
+     <h2>Заказ {{ cart.id }}</h2>
+     <table id="customers">
+         <thead>
+         <tr>
+             <th scope="col">Продукт</th>
+             <th scope="col">Цена</th>
+             <th scope="col">Количество</th>
+             <th scope="col">Стоимость</th>
+         </tr>
+         </thead>
+         <tbody>
+         {% for order_items in items %}
+             <tr>
+                 <td>{{ order_items.product }}</td>
+                 <td>{{ order_items.price }}</td>
+                 <td>{{ order_items.quantity }}</td>
+                 <td>{{ order_items.cost }}</td>
+             </tr>
+         {% endfor %}
+         <tr>
+             <td colspan="3"><strong>Сумма</strong></td>
+             <td><strong>{{ cart.amount }}</strong></td>
+         </tr>
+         </tbody>
+     </table>
+     </div>
+
+ {% endblock %}
+
+
+
+
+

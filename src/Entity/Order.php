@@ -4,12 +4,12 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity()
  * @ORM\Table(name="orders")
  */
-class Order
-{
+class Order {
     const STATUS_NEW = 1; // новый
     const STATUS_ORDERED = 2; // заказан
     const STATUS_SENT = 3; // отправлен

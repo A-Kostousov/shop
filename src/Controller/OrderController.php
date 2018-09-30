@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Product;
 use App\Service\Orders;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,27 @@ class OrderController extends AbstractController
     public function addToCart(Product $product, Orders $orders, Request $request, $quantity = 1) {
         $orders->addToCart($product, $quantity);
 
+        if ($request->isXmlHttpRequest()) {
+            return $this->cartInHeader($orders);
+        }
         return $this->redirect($request->headers->get('referer'));
+    }
+
+    /**
+     * @Route("/orders/cart-in-header", name="orders_cart_in_header")
+     */
+    public function cartInHeader (Orders $orders) {
+        $cart = $orders->getCartFromSession();
+        return $this->render('orders/cart_in_header.html.twig', ['cart' =>$cart]);
+    } // - это метод
+
+    /**
+     * @Route("orders/cart", name="orders_cart")
+     */
+    public function cart(Orders $orders) {
+        $cart = $orders->getCartFromSession();
+        $items = $orders->getCartFromSession()->getItems();
+        return $this->render('orders/cart.html.twig',
+            ['cart' => $cart, 'items' => $items]);
     }
 }
