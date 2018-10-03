@@ -5,13 +5,13 @@
         <div class="card">
             <div class="panel-heading">{{ product.name }}</div>
             {% if product.images.first %}
-                <img class="card-img-top" src="{{ vich_uploader_asset(product.images.first, 'imageFile') }}" style="width:100%"  alt="{{ product.name }}">
+                <img class="card-img-top" src="{{ vich_uploader_asset(product.images.first, 'imageFile') | imagine_filter ('squared_thumbnail') }}" style="width:100%"  alt="{{ product.name }}">
             {% else %}
                 <img class="card-img-top" src="https://placehold.it/150x80?text=IMAGE"  alt="{{ product.name }}">
             {% endif %}
             <div class="card-body">
 
-                <p class="card-text">{{ product.description }}</p>
+                <p class="card-text">{{ product.shortDescription }}</p>
                 <p class="card-text">{{ product.price }} грн.</p>
                 <a href="{{ path('products_show', {'id': product.id}) }}" class="btn btn-info">Подробнее</a>
 

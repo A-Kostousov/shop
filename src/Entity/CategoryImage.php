@@ -189,11 +189,11 @@ class CategoryImage
     }
 
     public function validateFile(ExecutionContextInterface $context) {
-        $constraint = new Assert\Blank();
+        $constraint = new Assert\NotBlank();
         $context
             ->getValidator()
             ->inContext($context)
             ->atPath('imageFile')
-            ->validate($this->fileName, $constraint, [Constraint::DEFAULT_GROUP]);
+            ->validate($this->fileName ?: $this->imageFile, $constraint, [Constraint::DEFAULT_GROUP]);
     }
 }
