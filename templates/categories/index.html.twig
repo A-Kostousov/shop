@@ -3,8 +3,10 @@
 {% block title %}All Categories{% endblock %}
 
 {% block body %}
+<div class="container">
     {% for category in categories %}
         {{ category.id }}<a href="{{ path('category_show', {'id': category.id}) }}"> {{ category.name }}</a>
         <br>
     {% endfor %}
+</div>
 {% endblock %}

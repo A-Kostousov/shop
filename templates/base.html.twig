@@ -47,14 +47,14 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{ path('homepage') }}">На главную</a></li>
                 <li><a href="{{ path('categories') }}">Категории</a></li>
-                <li><a href="#"></a></li>
-                <li><a href="#"></a></li>
+                <li><a href="{{ path('feedback') }}">Обратная связь</a></li>
+                <li><a href="{{ path('sonata_admin_dashboard') }}">Панель администратора</a></li>
                 <li><a href="#"></a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    <li><span class="glyphicon glyphicon-user"> {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span> Your Account</li>
-                    </li>
+                    <span class="navbar-text glyphicon glyphicon-user"> {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}</span>
+
                     <li class="nav-item">
                         <a href="{{ path('fos_user_security_logout') }}" class="nav-link">
                             {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
@@ -73,7 +73,7 @@
                         </a>
                     </li>
                 {% endif %}
-                <li><span class="-shopping-cart">{{ render (controller ('App\\Controller\\OrderController::cartInHeader')) }}</span></li>
+                <li><span class="navbar-text -shopping-cart">{{ render (controller ('App\\Controller\\OrderController::cartInHeader')) }}</span></li>
             </ul>
         </div>
     </div>

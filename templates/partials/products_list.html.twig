@@ -4,8 +4,13 @@
         <div class="panel panel-primary">
         <div class="card">
             <div class="panel-heading">{{ product.name }}</div>
-            <img class="card-img-top"<img src="https://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image" alt="{{ product.name }}">
+            {% if product.images.first %}
+                <img class="card-img-top" src="{{ vich_uploader_asset(product.images.first, 'imageFile') }}" style="width:100%"  alt="{{ product.name }}">
+            {% else %}
+                <img class="card-img-top" src="https://placehold.it/150x80?text=IMAGE"  alt="{{ product.name }}">
+            {% endif %}
             <div class="card-body">
+
                 <p class="card-text">{{ product.description }}</p>
                 <p class="card-text">{{ product.price }} грн.</p>
                 <a href="{{ path('products_show', {'id': product.id}) }}" class="btn btn-info">Подробнее</a>

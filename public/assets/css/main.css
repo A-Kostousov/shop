@@ -119,3 +119,7 @@
     background-color: slategrey;
     color: black;
 }
+
+div.card-img-top {
+    height: 253px;
+}

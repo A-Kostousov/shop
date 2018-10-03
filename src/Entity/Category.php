@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="category")
@@ -29,9 +29,21 @@ class Category
      */
     private $products;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\CategoryImage",
+     *     mappedBy="category",
+     *     orphanRemoval=true,
+     *     cascade={"persist"}
+     *     )
+     * @ORM\OrderBy({"position" = "ASC"})
+     * @Assert\Valid()
+     */
+    private $images;
+
     public function __construct() {
         $this->name = '';
         $this->products = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getId(): ?int {
@@ -81,5 +93,36 @@ class Category
     public function __toString() {
 
         return $this->name;
+    }
+
+    /**
+     * @return Collection|CategoryImage[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(CategoryImage $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(CategoryImage $image): self
+    {
+        if ($this->images->contains($image)) {
+            $this->images->removeElement($image);
+            // set the owning side to null (unless already changed)
+            if ($image->getCategory() === $this) {
+                $image->setCategory(null);
+            }
+        }
+
+        return $this;
     }
 }
