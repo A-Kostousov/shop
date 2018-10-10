@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
  {% block title %}Магазин{% endblock %}
  {% block body %}
-<div class="container">
-     <div class="col-sm-4">
-     <h2>Заказ {{ cart.id }}</h2>
+<div class="col-lg-12 col-">
+     <div class="col-sm-push-3 ">
+     <h2>Заказ № {{ cart.id }}</h2>
      <table id="customers">
          <thead>
          <tr>
@@ -11,25 +11,35 @@
              <th scope="col">Цена</th>
              <th scope="col">Количество</th>
              <th scope="col">Стоимость</th>
+             <th scope="col">Удалить</th>
          </tr>
          </thead>
-         <tbody>
-         {% for order_items in items %}
-             <tr>
-                 <td>{{ order_items.product }}</td>
-                 <td>{{ order_items.price }}</td>
-                 <td>{{ order_items.quantity }}</td>
-                 <td>{{ order_items.cost }}</td>
+         <tbody id="cart-table">
+         {% for item in items %}
+             <tr data-item-id="{{ item.id }}">
+                 <td>{{ item.product }}</td>
+                 <td>{{ item.price }}</td>
+                 <td>
+                     <input type="number" min="1" max="1000" pattern="\d+" name="quantity" value="{{ item.quantity }}"
+                            class="js-item-quantity"
+                            data-update-url="{{ path('orders_update_item_quantity', {'id':item.id}) }}">
+                 </td>
+                 <td class="js-item-cost">{{ item.cost }}</td>
+                 <td>
+                     <a class="js-remove-item" href="{{ path('orders_remove_item', {'id': item.id}) }}"
+                        title="Удалить из корзины заказов"> <i class="fas fa-trash"></i></a>
+                 </td>
              </tr>
          {% endfor %}
          <tr>
              <td colspan="3"><strong>Сумма</strong></td>
-             <td><strong>{{ cart.amount }}</strong></td>
+             <td class="js-order-amount"><strong>{{ cart.amount|localizedcurrency('UAH') }}</strong></td>
          </tr>
          </tbody>
      </table>
      </div>
 </div>
+
  {% endblock %}
 
 

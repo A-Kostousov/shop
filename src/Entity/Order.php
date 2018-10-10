@@ -122,7 +122,7 @@ class Order {
     public function removeItem(OrderItem $item): self {
         if ($this->items->contains($item)) {
             $this->items->removeElement($item);
-            $$this->calculateAmount();
+            $this->calculateAmount();
 
             // set the owning side to null (unless already changed)
             if ($item->getOrder() === $this) {

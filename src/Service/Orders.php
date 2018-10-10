@@ -76,6 +76,29 @@ class Orders
     }
 
     /**
+     * @param OrderItem $item
+     * @param int $quantity
+     *
+     * @return Order
+     *
+     * @throws
+     */
+    public function updateItemQuantity(OrderItem $item, int $quantity): Order {
+        $item->setQuantity($quantity);
+        $this->em->flush();
+        return $item->getOrder();
+    }
+
+    public function removeItem(OrderItem $item): Order {
+        $order = $item->getOrder();
+        $order->removeItem($item);
+        $this->em->remove($item);
+        $this->em->flush();
+
+        return $order;
+    }
+
+    /**
      * @param Order $order
      * @throws \Doctrine\ORM\ORMException
      * @throws \Doctrine\ORM\OptimisticLockException
@@ -85,5 +108,7 @@ class Orders
         $this->em->flush();
         $this->session->set(self::CART_SESSION_NAME, $order->getId());
     }
+
+
 
 }

@@ -91,7 +91,9 @@
                         </a>
                     </li>
                 {% endif %}
-                <li><span class="navbar-text -shopping-cart">{{ render (controller ('App\\Controller\\OrderController::cartInHeader')) }}</span></li>
+                <li>
+                    <span><a class="navbar-text -shopping-cart js-cart-in-header" href="{{ path('orders_cart') }}" data-url="{{ path('orders_cart_in_header') }}">{{ render (controller ('App\\Controller\\OrderController::cartInHeader')) }}</a></span>
+                </li>
             </ul>
         </div>
     </div>
