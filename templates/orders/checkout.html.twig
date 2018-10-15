@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+{% block title %}Оформление заказа{% endblock %}
+
+
+ {% block body %}
+     <div class="container">
+     <div class="row">
+         <div class="col-sm-12">
+         <div class="glyphicon-shopping-cart ">
+             <h2>Оформление заказа: Заказ № {{ cart.id }}</h2>
+             <table id="customers">
+                 <thead>
+                 <tr>
+                     <th scope="col">Продукт</th>
+                     <th scope="col">Цена</th>
+                     <th scope="col">Количество</th>
+                     <th scope="col">Стоимость</th>
+                 </tr>
+                 </thead>
+                 <tbody id="cart-table">
+                 {% for item in cart.items %}
+                     <tr>
+                         <td>{{ item.product }}</td>
+                         <td>{{ item.price }}</td>
+                         <td>{{ item.quantity }}</td>
+                         <td>{{ item.cost }}</td>
+                     </tr>
+                 {% endfor %}
+                 <tr>
+                     <td colspan="3"><strong>Сумма</strong></td>
+                     <td><strong>{{ cart.amount|localizedcurrency('UAH') }}</strong></td>
+                 </tr>
+                 </tbody>
+             </table>
+         </div>
+     </div>
+     </div>
+         <p>
+     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+     {{ form_widget(form) }}
+
+     <div class="form-group">
+         <div class="col-sm-10 col-sm-offset-2">
+             <button type="submit" class="btn btn-primary">Отправить</button>
+         </div>
+     </div>
+     {{ form_end(form) }}
+         </p>
+     </div>
+ {% endblock %}
+
+
+
+
+

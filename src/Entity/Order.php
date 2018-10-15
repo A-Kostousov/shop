@@ -4,7 +4,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity()
  * @ORM\Table(name="orders")
@@ -52,22 +52,28 @@ class Order {
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"MakeOrder"})
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank(groups={"MakeOrder"})
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Email(groups={"MakeOrder"}, checkMX=true)
+     * @Assert\NotBlank(groups={"MakeOrder"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     */
+     * @Assert\NotBlank(groups={"MakeOrder"})
+     * @Assert\Regex(groups={"MakeOrder"}, pattern= "/^\+\d{12}$/", message="Введите телефон в формате +3805000005")
+     * */
     private $phone;
 
     /**

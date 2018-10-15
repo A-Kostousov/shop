@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Order;
 use App\Entity\OrderItem;
 use App\Entity\Product;
+use App\Form\MakeOrderType;
 use App\Service\Orders;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +33,7 @@ class OrderController extends AbstractController
      */
     public function addToCart(Product $product, Orders $orders, Request $request, $quantity = 1)
     {
-        $orders->addToCart($product, $quantity);
+        $orders->addToCart($product, $this->getUser(), $quantity);
 
         if ($request->isXmlHttpRequest()) {
             return $this->cartInHeader($orders);
@@ -47,7 +48,7 @@ class OrderController extends AbstractController
      */
     public function cartInHeader(Orders $orders)
     {
-        $cart = $orders->getCartFromSession();
+        $cart = $orders->getCartFromSession($this->getUser());
         return $this->render('orders/cart_in_header.html.twig', ['cart' => $cart]);
     } // - это метод
 
@@ -58,8 +59,8 @@ class OrderController extends AbstractController
      */
     public function cart(Orders $orders)
     {
-        $cart = $orders->getCartFromSession();
-        $items = $orders->getCartFromSession()->getItems();
+        $cart = $orders->getCartFromSession($this->getUser());
+        $items = $cart->getItems();
         return $this->render('orders/cart.html.twig',
             ['cart' => $cart, 'items' => $items]);
     }
@@ -102,5 +103,32 @@ class OrderController extends AbstractController
         }
 
         return $this->redirectToRoute('orders_cart');
+    }
+
+    /**
+     * @Route("/cart/checkout", name="orders_checkout")
+     */
+    public function makeOrder (Orders $orders, Request $request) {
+        $cart = $orders->getCartFromSession($this->getUser());
+        $form = $this->createForm(MakeOrderType::class, $cart);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $orders->checkout($cart);
+
+            return $this->redirectToRoute('orders_success');
+        }
+
+        return $this->render('orders/checkout.html.twig', [
+            'cart' => $cart,
+            'form' =>$form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/cart/success", name="orders_success")
+     */
+    public function success() {
+        return $this->render('orders/success.html.twig');
     }
 }
