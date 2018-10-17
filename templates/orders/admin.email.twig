@@ -1,5 +1,52 @@
-{% block subject %}Новый заказ{% endblock %}
+{% block subject %}Ваша покупка на сайте Online магазин{% endblock %}
 
 {% block body %}
-        Ваш заказ успешно оформлен {{ item.id }}</h1>
+
+        <h1>Ваш заказ успешно оформлен, заказ №{{ order.id }}</h1>
+        <p>Пользователь: {{ order.firstName }} {{ order.lastName }}</p>
+        <p>Email: {{ order.email }}</p>
+        <p>Телефон: {{ order.phone }}</p>
+        <p>Адрес: {{ order.address }}</p>
+        <style>
+                customers{
+                        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                        border-collapse: collapse;
+                        width: 100%;}
+
+                #customers td, #customers th {
+                        border: 1px solid #ddd;
+                        padding: 8px;}
+
+                #customers th {
+                        padding-top: 8px;
+                        padding-bottom: 8px;
+                        text-align: left;
+                        color: black;
+                }
+        </style>
+
+        <table id="customers">
+                <thead>
+                <tr>
+                        <th scope="col">Продукт</th>
+                        <th scope="col">Цена</th>
+                        <th scope="col">Количество</th>
+                        <th scope="col">Стоимость</th>
+                </tr>
+                </thead>
+                <tbody id="cart-table">
+                {% for item in order.items %}
+                        <tr>
+                                <td>{{ item.product }}</td>
+                                <td>{{ item.price }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td>{{ item.cost }}</td>
+                        </tr>
+                {% endfor %}
+                <tr>
+                        <td colspan="3"><strong>Сумма</strong></td>
+                        <td><strong>{{ order.amount|localizedcurrency('UAH') }}</strong></td>
+                </tr>
+                </tbody>
+        </table>
 {% endblock %}

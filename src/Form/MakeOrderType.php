@@ -12,11 +12,11 @@ class MakeOrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstName')
-            ->add('lastName')
+            ->add('firstName', null, ['label' => 'label.firstName'])
+            ->add('lastName', null, ['label' => 'label.lastName'])
             ->add('email')
-            ->add('phone')
-            ->add('address')
+            ->add('phone', null, ['label' => 'label.phone'])
+            ->add('address', null, ['label' => 'label.address'])
         ;
     }
 

@@ -48,7 +48,7 @@ class Mailer
         $message->addFrom($this->senderEmail);
         $message->addTo($to);
         $message->setSubject($subject);
-        $message->setBody($body);
+        $message->setBody($body, 'text/html');
 
         $this->mailer->send($message);
     }
