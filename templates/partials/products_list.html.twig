@@ -1,6 +1,6 @@
 {% for product in products %}
-        <div class="tab-primary">
-            <div class="col-sm-3">
+        <div class="col-sm-6 col-md-3">
+            <div class="col">
                 <div class="panel panel-primary">
                     <div class="card">
                         <div class="panel-heading">{{ product.name }}</div>
@@ -9,9 +9,9 @@
                         {% else %}
                             <img class="card-img-top" src="https://placehold.it/150x80?text=IMAGE"  alt="{{ product.name }}">
                         {% endif %}
-                        <div class="card-body">
-                            <p class="card-text">{{ product.shortDescription }}</p>
-                            <p class="card-text">{{ product.price }} грн.</p>
+                        <div class="card-body product-cart">
+                            <p class="fc-header-title">{{ product.shortDescription }}</p>
+                            <p class="card-text product-description">{{ product.price }} грн.</p>
                             <a href="{{ path('products_show', {'id': product.id}) }}" class="btn btn-info">Подробнее</a>
                             <a href="{{ path('orders_add_to_cart', {'id': product.id, 'quantity': 1}) }}"
                                class="btn btn-primary js-add-to-cart">

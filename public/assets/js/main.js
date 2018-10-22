@@ -56,6 +56,12 @@ jQuery(function ($) {
 
         function updateCart(cartData) {
             updateCartInHeader();
+            if (cartData.isEmpty) {
+                location.reload();
+
+                return;
+            }
+
             $me.find('.js-order-amount').html(cartData.amount);
             $.each(cartData.items, function (itemId, itemCost) {
                 var selector = '[data-item-id=' + itemId + '] .js-item-cost';
