@@ -43,7 +43,6 @@ class Mailer
         $temlate = $this->twig->load($temlateName);
         $subject = $temlate->renderBlock('subject', $params);
         $body = $temlate->renderBlock('body', $params);
-
         $message = new \Swift_Message();
         $message->addFrom($this->senderEmail);
         $message->addTo($to);

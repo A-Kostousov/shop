@@ -121,7 +121,7 @@ class Orders
         $order->setStatus(Order::STATUS_ORDERED);
         $this->em->flush();
         $this->mailer->send($this->adminEmail, 'orders/admin.email.twig', ['order' => $order]);
-        $this->mailer->send($order>getEmil(), 'user/admin.email.twig', ['order' => $order]);
+        $this->mailer->send($order->getEmail(), 'orders/user.email.twig', ['order' => $order]);
     }
 
     /**

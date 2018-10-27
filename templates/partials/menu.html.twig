@@ -83,11 +83,9 @@
 {% endblock %}
 
 {% block dropdownlinks %}
-    {% if use_multilevel %}
-        <ul class="dropdown-menu">
-    {% else %}
-        <div class="dropdown-menu">
-    {% endif %}
+
+    <ul class="dropdown-menu">
+
     {% for item in item.children %}
         {{ block('renderDropdownlink') }}
 
@@ -95,11 +93,9 @@
             {{ block('dropdownlinks') }}
         {% endif %}
     {% endfor %}
-    {% if not use_multilevel %}
-        </div>
-    {% else %}
-        </ul>
-    {% endif %}
+
+    </ul>
+
 {% endblock %}
 
 {% block renderDropdownlink %}
@@ -108,9 +104,7 @@
     {%- set divider_append = item.attributes.divider_append|default(false) %}
     {%- set attributes = item.attributes|merge({'dropdown': null, 'divider_prepend': null, 'divider_append': null }) %}
 
-    {% if use_multilevel %}
-        <li>
-    {% endif %}
+     <li>
 
     {%- if divider_prepend %}
         {{ block('dividerElementDropdown') }}
@@ -127,9 +121,7 @@
         {{ block('dividerElementDropdown') }}
     {%- endif %}
 
-    {% if use_multilevel %}
-        </li>
-    {% endif %}
+     </li>
 {% endblock %}
 
 {% block spanElementDropdown %}
