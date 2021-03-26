@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="category_image")
  * @Vich\Uploadable
+ * @ORM\Entity(repositoryClass="App\Repository\CategoryImageRepository")
  */
 class CategoryImage
 {
@@ -27,14 +28,14 @@ class CategoryImage
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $category;
+    private $categories;
 
     /**
      * @var File
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(
-     *     mapping="category",
+     *     mapping="categories",
      *     fileNameProperty="fileName",
      *     size="size",
      *     mimeType="mimeType",
@@ -82,20 +83,24 @@ class CategoryImage
      */
     private $updatedAt;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->updatedAt = new \DateTime();
     }
 
-    public function getId(): ?int {
+    public function getId(): ?int
+    {
         return $this->id;
     }
 
-    public function getCategory(): ?Category {
-        return $this->category;
+    public function getCategory(): ?Category
+    {
+        return $this->categories;
     }
 
-    public function setCategory(?Category $category): self {
-        $this->category = $category;
+    public function setCategory(?Category $categories): self
+    {
+        $this->categories = $categories;
 
         return $this;
     }
@@ -103,14 +108,16 @@ class CategoryImage
     /**
      * @return File
      */
-    public function getImageFile(): ?File {
+    public function getImageFile(): ?File
+    {
         return $this->imageFile;
     }
 
     /**
      * @param File $imageFile
      */
-    public function setImageFile(?File $imageFile): void {
+    public function setImageFile(?File $imageFile): void
+    {
         $this->imageFile = $imageFile;
 
         if ($imageFile !== null) {
@@ -118,31 +125,37 @@ class CategoryImage
         }
     }
 
-    public function getFileName(): ?string {
+    public function getFileName(): ?string
+    {
         return $this->fileName;
     }
 
-    public function setFileName(?string $fileName): self {
+    public function setFileName(?string $fileName): self
+    {
         $this->fileName = $fileName;
 
         return $this;
     }
 
-    public function getSize(): ?int {
+    public function getSize(): ?int
+    {
         return $this->size;
     }
 
-    public function setSize(?int $size): self {
+    public function setSize(?int $size): self
+    {
         $this->size = $size;
 
         return $this;
     }
 
-    public function getMimeType(): ?string {
+    public function getMimeType(): ?string
+    {
         return $this->mimeType;
     }
 
-    public function setMimeType(?string $mimeType): self {
+    public function setMimeType(?string $mimeType): self
+    {
         $this->mimeType = $mimeType;
 
         return $this;
@@ -152,43 +165,51 @@ class CategoryImage
         return $this->originalName;
     }
 
-    public function setOriginalName(?string $originalName): self {
+    public function setOriginalName(?string $originalName): self
+    {
         $this->originalName = $originalName;
 
         return $this;
     }
 
-    public function getDimensions(): ?array {
+    public function getDimensions(): ?array
+    {
         return $this->dimensions;
     }
 
-    public function setDimensions(?array $dimensions): self {
+    public function setDimensions(?array $dimensions): self
+    {
         $this->dimensions = $dimensions;
 
         return $this;
     }
 
-    public function getPosition(): ?int {
+    public function getPosition(): ?int
+    {
         return $this->position;
     }
 
-    public function setPosition(int $position): self {
+    public function setPosition(int $position): self
+    {
         $this->position = $position;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface {
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeInterface $updatedAt): self {
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
-    public function validateFile(ExecutionContextInterface $context) {
+    public function validateFile(ExecutionContextInterface $context)
+    {
         $constraint = new Assert\NotBlank();
         $context
             ->getValidator()

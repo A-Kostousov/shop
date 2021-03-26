@@ -1,9 +1,13 @@
 <?php
+
 namespace App\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
+
 /**
  * @ORM\Entity()
  * @ORM\Table(name="order_items")
+ * @ORM\Entity(repositoryClass="App\Repository\OrderItemRepository")
  */
 class OrderItem {
 
@@ -43,81 +47,95 @@ class OrderItem {
      */
     private $cost;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->quantity = 0;
         $this->price = 0;
         $this->cost = 0;
     }
 
-    public function getId(): ?int {
+    public function getId(): ?int
+    {
         return $this->id;
     }
 
-    public function getOrder(): ?Order {
+    public function getOrder(): ?Order
+    {
         return $this->order;
     }
 
-    public function setOrder(?Order $order): self {
+    public function setOrder(?Order $order): self
+    {
         $this->order = $order;
 
         return $this;
     }
 
-    public function getProduct(): ?Product {
+    public function getProduct(): ?Product
+    {
         return $this->product;
     }
 
-    public function setProduct(?Product $product): self {
+    public function setProduct(?Product $product): self
+    {
         $this->product = $product;
         $this->setPrice($product->getPrice());
 
         return $this;
     }
 
-    public function getQuantity(): ?int {
+    public function getQuantity(): ?int
+    {
         return $this->quantity;
     }
 
-    public function setQuantity(int $quantity): self {
+    public function setQuantity(int $quantity): self
+    {
         $this->quantity = $quantity;
-        $this->calculateCost();
+        $this->updateCost();
 
         return $this;
     }
 
-    public function addQuantity (int $quantity): self {
+    public function addQuantity (int $quantity): self
+    {
         $this->quantity += $quantity;
-        $this->calculateCost();
+        $this->updateCost();
 
         return $this;
     }
 
-    public function getPrice() {
+    public function getPrice()
+    {
         return $this->price;
     }
 
-    public function setPrice($price): self {
+    public function setPrice($price): self
+    {
         $this->price = $price;
-        $this->calculateCost();
+        $this->updateCost();
 
         return $this;
     }
 
-    public function getCost() {
+    public function getCost()
+    {
         return $this->cost;
     }
 
-    public function setCost($cost): self {
+    public function setCost($cost): self
+    {
         $this->cost = $cost;
 
         return $this;
     }
 
-    public function calculateCost() {
+    public function updateCost()
+    {
         $this->cost = $this->price * $this->quantity;
 
         if ($this->order) {
-            $this->order->calculateAmount();
+            $this->order->updateAmount();
         }
     }
 }

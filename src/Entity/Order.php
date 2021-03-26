@@ -1,13 +1,16 @@
 <?php
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity()
  * @ORM\Table(name="orders")
+ * @ORM\Entity(repositoryClass="App\Repository\OrderRepository")
  */
 class Order {
     const STATUS_NEW = 1; // новый
@@ -86,7 +89,8 @@ class Order {
      */
     private $user;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->createdAt = new \DateTime();
         $this->status = self::STATUS_NEW;
         $this->isPaid = false;
@@ -94,45 +98,54 @@ class Order {
         $this->items = new ArrayCollection();
     }
 
-    public function getId(): ?int {
+    public function getId(): ?int
+    {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface {
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self {
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getStatus(): ?int {
+    public function getStatus(): ?int
+    {
         return $this->status;
     }
 
-    public function setStatus(int $status): self {
+    public function setStatus(int $status): self
+    {
         $this->status = $status;
 
         return $this;
     }
 
-    public function getIsPaid(): ?bool {
+    public function getIsPaid(): ?bool
+    {
         return $this->isPaid;
     }
 
-    public function setIsPaid(bool $isPaid): self {
+    public function setIsPaid(bool $isPaid): self
+    {
         $this->isPaid = $isPaid;
 
         return $this;
     }
 
-    public function getAmount() {
+    public function getAmount()
+    {
         return $this->amount;
     }
 
-    public function setAmount($amount): self {
+    public function setAmount($amount): self
+    {
         $this->amount = $amount;
 
         return $this;
@@ -141,24 +154,27 @@ class Order {
     /**
      * @return Collection|OrderItem[]
      */
-    public function getItems(): Collection {
+    public function getItems(): Collection
+    {
         return $this->items;
     }
 
-    public function addItem(OrderItem $item): self{
+    public function addItem(OrderItem $item): self
+    {
         if (!$this->items->contains($item)) {
             $this->items[] = $item;
             $item->setOrder($this);
-            $this->calculateAmount();
+            $this->updateAmount();
         }
 
         return $this;
     }
 
-    public function removeItem(OrderItem $item): self {
+    public function removeItem(OrderItem $item): self
+    {
         if ($this->items->contains($item)) {
             $this->items->removeElement($item);
-            $this->calculateAmount();
+            $this->updateAmount();
 
             // set the owning side to null (unless already changed)
             if ($item->getOrder() === $this) {
@@ -169,7 +185,8 @@ class Order {
         return $this;
     }
 
-    public function calculateAmount(){
+    public function updateAmount()
+    {
         $this->amount = 0;
 
         foreach ($this->items as $item) {

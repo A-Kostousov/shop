@@ -31,11 +31,13 @@ class Builder
     public function mainMenu(array $options)
     {
         $menu = $this->factory->createItem('root',
-            ['childrenAttributes' => ['class' => 'nav navbar-nav' ]]);
-        $menu->addChild('На главную', ['route' => 'homepage']);
-        $catalogue = $menu->addChild('Каталог', [
-            'attributes' => [
-                'dropdown' => true, ],]);
+            ['childrenAttributes' =>
+                ['class' => 'nav navbar-nav' ]
+            ]);
+        $menu->addChild('На главную',
+            ['route' => 'homepage']);
+        $catalogue = $menu->addChild('Каталог',
+            ['attributes' => ['dropdown' => true,],]);
 
         /**
          * @var EntityRepository $categotyRepo

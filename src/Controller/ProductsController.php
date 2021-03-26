@@ -27,7 +27,8 @@ class ProductsController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function show(Product $product) {
-        return $this->render('products/show.html.twig.', [
+
+        return $this->render('products/show.html.twig', [
             'product' => $product
         ]);
     }

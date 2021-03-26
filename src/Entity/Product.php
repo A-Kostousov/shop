@@ -1,12 +1,15 @@
 <?php
 namespace App\Entity;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity()
  * @ORM\Table(name="products")
+ * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  */
 class Product
 {
@@ -58,73 +61,93 @@ class Product
      */
     private $images;
 
-    public function __construct() {
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\AttributeValue", mappedBy="product",
+     *     orphanRemoval=true, indexBy="attribute_id", cascade={"all"})
+     */
+    private $attributeValues;
+
+    public function __construct()
+    {
         $this->name = '';
         $this->price = 0;
         $this->isTop = false;
         $this->orderItems = new ArrayCollection();
         $this->images = new ArrayCollection();
+        $this->attributeValues = new ArrayCollection();
     }
 
-    public function getId(): ?int {
+    public function getId(): ?int
+    {
         return $this->id;
     }
 
-    public function getName(): ?string {
+    public function getName(): ?string
+    {
 
         return $this->name;
     }
 
-    public function setName(string $name): self {
+    public function setName(string $name): self
+    {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getDescription(): ?string {
+    public function getDescription(): ?string
+    {
 
         return $this->description;
     }
 
-    public function setDescription(?string $description): self {
+    public function setDescription(?string $description): self
+    {
         $this->description = $description;
 
         return $this;
     }
 
-    public function getPrice() {
+    public function getPrice()
+    {
         return $this->price;
     }
 
-    public function setPrice($price): self {
+    public function setPrice($price): self
+    {
         $this->price = $price;
 
         return $this;
     }
 
-    public function getIsTop(): ?bool {
+    public function getIsTop(): ?bool
+    {
 
         return $this->isTop;
     }
 
-    public function setIsTop(bool $isTop): self {
+    public function setIsTop(bool $isTop): self
+    {
         $this->isTop = $isTop;
 
         return $this;
     }
 
-    public function getCategory(): ?Category {
+    public function getCategory(): ?Category
+    {
 
         return $this->category;
     }
 
-    public function setCategory(?Category $category): self {
+    public function setCategory(?Category $category): self
+    {
         $this->category = $category;
 
         return $this;
     }
 
-    public function __toString() {
+    public function __toString()
+    {
 
         return $this->name;
     }
@@ -132,12 +155,14 @@ class Product
     /**
      * @return Collection|OrderItem[]
      */
-    public function getOrderItems(): Collection {
+    public function getOrderItems(): Collection
+    {
 
         return $this->orderItems;
     }
 
-    public function addOrderItem(OrderItem $orderItem): self {
+    public function addOrderItem(OrderItem $orderItem): self
+    {
         if (!$this->orderItems->contains($orderItem)) {
             $this->orderItems[] = $orderItem;
             $orderItem->setProduct($this);
@@ -146,7 +171,8 @@ class Product
         return $this;
     }
 
-    public function removeOrderItem(OrderItem $orderItem): self {
+    public function removeOrderItem(OrderItem $orderItem): self
+    {
         if ($this->orderItems->contains($orderItem)) {
             $this->orderItems->removeElement($orderItem);
             // set the owning side to null (unless already changed)
@@ -197,4 +223,36 @@ class Product
 
         return $short;
     }
+
+    /**
+     * @return Collection|AttributeValue[]
+     */
+    public function getAttributeValues(): Collection
+    {
+        return $this->attributeValues;
+    }
+
+    public function addAttributeValue(AttributeValue $attributeValue): self
+    {
+        if (!$this->attributeValues->contains($attributeValue)) {
+            $this->attributeValues[$attributeValue->getAttribute()->getId()] = $attributeValue;
+            $attributeValue->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttributeValue(AttributeValue $attributeValue): self
+    {
+        if ($this->attributeValues->contains($attributeValue)) {
+            $this->attributeValues->removeElement($attributeValue);
+            // set the owning side to null (unless already changed)
+            if ($attributeValue->getProduct() === $this) {
+                $attributeValue->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

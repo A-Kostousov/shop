@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="users")
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
 class User extends BaseUser
 {
@@ -44,7 +45,8 @@ class User extends BaseUser
      */
     private $phone;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->firstName= '';
@@ -53,40 +55,47 @@ class User extends BaseUser
         $this->orders = new ArrayCollection();
     }
 
-    public function getfirstname(): ?string {
+    public function getfirstname(): ?string
+    {
 
         return $this->firstName;
     }
 
-    public function setfirstname(string $firstName): self {
+    public function setfirstname(string $firstName): self
+    {
         $this->firstName = $firstName;
 
         return $this;
     }
 
-    public function getlastname(): ?string {
+    public function getlastname(): ?string
+    {
 
         return $this->lastName;
     }
 
-    public function setlastname(string $lastName): self {
+    public function setlastname(string $lastName): self
+    {
         $this->lastName = $lastName;
 
         return $this;
     }
 
-    public function getaddress(): ?string {
+    public function getaddress(): ?string
+    {
 
         return $this->address;
     }
 
-    public function setaddress(string $address): self {
+    public function setaddress(string $address): self
+    {
         $this->address = $address;
 
         return $this;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->username = $email;
 
         return parent::setEmail($email);
