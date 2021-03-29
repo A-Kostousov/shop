@@ -28,7 +28,7 @@ class CategoryImage
      * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="images")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $categories;
+    private $category;
 
     /**
      * @var File
@@ -95,12 +95,12 @@ class CategoryImage
 
     public function getCategory(): ?Category
     {
-        return $this->categories;
+        return $this->category;
     }
 
     public function setCategory(?Category $categories): self
     {
-        $this->categories = $categories;
+        $this->category = $categories;
 
         return $this;
     }

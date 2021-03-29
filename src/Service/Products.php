@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -26,13 +27,13 @@ class Products
      * @var EntityRepository
      */
 
-    private $categoriesRepo;
+    private $categoryRepository;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, CategoryRepository $categoryRepository)
     {
         $this->em = $em;
         $this->repo = $this->em->getRepository(Product::class);
-        $this->categoriesRepo = $this->em->getRepository(Category::class);
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -59,6 +60,6 @@ class Products
 
     public function getAllCategories()
     {
-        return $this->categoriesRepo->findAll();
+        return $this->categoryRepository->findAll();
     }
 }

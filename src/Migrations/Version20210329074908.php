@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210326160110 extends AbstractMigration
+final class Version20210329074908 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -23,7 +23,9 @@ final class Version20210326160110 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE products ADD CONSTRAINT FK_B3BA5A5A12469DE2 FOREIGN KEY (category_id) REFERENCES categories (id)');
+        $this->addSql('ALTER TABLE category_image ADD category_id INT NOT NULL');
         $this->addSql('ALTER TABLE category_image ADD CONSTRAINT FK_2D0E4B1612469DE2 FOREIGN KEY (category_id) REFERENCES categories (id)');
+        $this->addSql('CREATE INDEX IDX_2D0E4B1612469DE2 ON category_image (category_id)');
     }
 
     public function down(Schema $schema) : void
@@ -32,6 +34,8 @@ final class Version20210326160110 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('ALTER TABLE category_image DROP FOREIGN KEY FK_2D0E4B1612469DE2');
+        $this->addSql('DROP INDEX IDX_2D0E4B1612469DE2 ON category_image');
+        $this->addSql('ALTER TABLE category_image DROP category_id');
         $this->addSql('ALTER TABLE products DROP FOREIGN KEY FK_B3BA5A5A12469DE2');
     }
 }
